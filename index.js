@@ -40,7 +40,7 @@ app.post('/list/', function (req, res) {
 			}
 			catch(e){}
 		}
-		
+
 		if (terms['search'] == "") bigout = {}
 		res.send(bigout)
 	})
@@ -67,7 +67,7 @@ app.post("/upload/",function (req,res)
 				res.send('{"status":"ok"}');
 				console.log(goto)
 				console.log(err)
-				
+
 			})
 		}
 
@@ -78,19 +78,19 @@ app.post("/upload/",function (req,res)
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
-
+	var ind = __dirname+"index.html"
 	if (fs.existsSync(file))
 	{
 		if (fs.lstatSync(file).isFile()) res.sendFile(file)
-		else 
+		else
 		{
 			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			else res.sendFile("/drops/index.html")
+			else res.sendFile(ind)
 		}
 	}
 	else
 	{	if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-		res.sendFile("/drops/index.html")
+		res.sendFile(ind)
 	}
 
 })
