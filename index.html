@@ -1,0 +1,177 @@
+<html>
+<head>
+	<title>Wait For It</title>
+    <script src="/static/jquery.min.js"></script>
+    <script src="/static/dmuploader.min.js"></script>
+
+	<style>
+	body
+	{
+		font-family: Helvetica;
+		font-size: 12px;
+		width:900px;
+	}
+	
+	a
+	{
+		color:red;
+		text-decoration:none;
+	}
+	
+	a:hover{color:silver;}
+	
+	.right
+	{
+		float:right;
+		width: 150px;
+	}
+	
+	.main{width:750px;}
+	
+	table
+	{
+		width:100%;
+		font-size:12px;
+	}
+
+	td
+	{
+		min-width:150px;
+	}
+
+	
+	tr:nth-child(even) {
+	    background-color: #EEE;
+	}
+	
+	
+	</style>
+
+</head>
+<body>
+	<h1 id="title">The New Drop Adventure:</h1>
+
+<div class="right">
+	<div id="drop-area-div" >
+  	  Drag & Drop Files or 
+	  <input type="file" name="files[]" multiple="multiple" title="Click to add Files">
+	</div>
+
+	<div id="cur_upload"></div>
+	<div id="queue_upload"></div>
+</div>
+
+
+<div class="main">
+	<div id="test"> </div>
+</div>
+<script>
+
+	foop = window.location.pathname.slice(1)
+	$("#title").html("Wait For The: "+foop+" Drop")
+
+	//http://stackoverflow.com/a/8175221/565514
+	function sortByKey(array, key) {
+    	return array.sort(function(a, b) {
+        	var x = a[key]; var y = b[key];
+        	return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });}
+
+	function csv_to_table(str)
+	{
+		out = "<table>\n"
+		p = str.split("\n")
+		for (i in p)
+		{
+			out+="<tr>"
+			ii = p[i].split("||||")
+
+			for (j in ii)
+			{
+				out += "<td>"+ii[j]+"</td>"
+			}
+			out+="</tr>\n"
+		}
+		out += "</table>"
+		return out
+
+	}
+
+	function sizer(nums)
+	{
+		if (nums > 1e9) 		nums = Math.round(nums/1e9) + " G"
+		else if (nums > 1e6)	nums = Math.round(nums/1e6) + " M"
+		else if (nums > 1e3)	nums = Math.round(nums/1e3) + " K"
+		else nums = 			nums + " B"
+		return nums
+
+	}
+
+	function linker(str)
+	{
+		nice = str.split("/")[str.split("/").length-1]
+		str = str.replace("/filez/","/")
+		return "<a href='"+str+"'>"+nice+"</a>"
+	}
+
+	
+	function getDir()
+	{
+	toget = window.location.pathname.slice(1)
+	search = {'search':toget}
+	out = ""
+	$.post("/list/",search,function(data) {
+		data = sortByKey(data,'mtime')
+		data.reverse()
+		for (d in data)
+		{
+			nameo = linker(data[d]['name'])
+			mtime = data[d]['mtime']
+			size  = sizer(data[d]['size'])
+			doop =nameo+"||||"+size +"||||"+mtime+"\n"
+			console.log(doop)
+			out += doop
+		}
+		$("#test").html(csv_to_table(out.trim()))
+
+	})
+	}
+	
+	
+	getDir()
+
+	//Upload Status Functions
+
+	//Show Percent
+	function uploadStatus(strang){$("#cur_upload").html(strang)}
+
+	//Queue
+	qq = {} //what's next
+	going = null; //what's now
+	function queueStatus(){
+		out = ""
+		for (q in qq) 		out += qq[q].name+":"+qq[q].size+";<br>"
+		$("#queue_upload").html(out)
+	}
+	
+	$("#drop-area-div").dmUploader(
+		{
+			url:'/upload/',
+			extraData:{path:window.location.pathname},
+			dataType: 'json',
+			onNewFile: function(id, file){qq[id]=file},
+			onBeforeUpload: function(id){going = qq[id];delete(qq[id]); queueStatus()},
+	        onUploadSuccess: function(id,data){getDir();uploadStatus("")},
+			onUploadProgress: function(id, percent){uploadStatus(going.name+": "+percent+"%")}
+		}
+	);
+	
+	setInterval(function(){getDir()},10000)
+	
+</script>
+
+</body>
+
+
+
+</html>
