@@ -101,9 +101,9 @@ app.get("/*", function(req,res){
 })
 
 //Starter Shell for Zipper
-app.post("/zip",function(req,res)){
+app.post("/zip",function(req,res){
 
-}
+})
 
 
 //Listen on Port 8000
