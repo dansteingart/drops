@@ -6,8 +6,9 @@
 
 	<style>
 	body { font-family: Helvetica; font-size: 12px; width:900px; }
-
+	table { font-family: Helvetica; font-size: 12px; }
 	a {color:red;text-decoration:none;}
+	h2 {color:gray;}
 
 	a:hover{color:silver;}
 
@@ -42,8 +43,15 @@
 </div>
 <script>
 
-	foop = window.location.pathname.slice(1)
-	$("#sub").html("you are here: "+foop)
+	foop = window.location.pathname.split("/").slice(1,-1)
+	lanks = ""
+	out = "/"
+	for (f in foop) 
+	{
+			out+=foop[f]+"/"
+			lanks += "<a href='"+out+"'>"+unescape(foop[f])+"</a>/"
+	}  
+	$("#sub").html("you are in "+lanks)
 
 	//http://stackoverflow.com/a/8175221/565514
 	function sortByKey(array, key) {
