@@ -82,9 +82,9 @@
 
 	function sizer(nums)
 	{
-		if (nums > 1e9) 		nums = Math.round(nums/1e9) + " G"
-		else if (nums > 1e6)	nums = Math.round(nums/1e6) + " M"
-		else if (nums > 1e3)	nums = Math.round(nums/1e3) + " K"
+		if (nums > 1e9) 		nums = Math.round(nums/1e7)/100 + " G"
+		else if (nums > 1e6)	nums = Math.round(nums/1e4)/100 + " M"
+		else if (nums > 1e3)	nums = Math.round(nums/1e1)/100 + " K"
 		else nums = 			nums + " B"
 		return nums
 
