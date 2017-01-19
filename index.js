@@ -3,13 +3,16 @@
 //Node replacement for the hoary drops.py
 
 //Done:
-//List Files with full state
-//Serve Basic Indexhtml
-//Uploads
-//CSS
-//Make New Dir
+//	- List Files with full state
+//	- Serve Basic Indexhtml
+//	- Uploads
+//	- Basic CSS
+//	- Make New Dir
 
-//To Do: authetication
+//To Do:
+// - auto zip
+// - better css
+// - authetication
 
 var express = require('express')
 var bodyParser = require('body-parser')
@@ -38,7 +41,7 @@ app.post('/list/', function (req, res) {
 				bigout[end] = fs.statSync(files[f])
 				bigout[end]['name'] = files[f]
 				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
-				
+
 
 			}
 			catch(e){}
@@ -57,8 +60,7 @@ app.post("/filez/", function (req,res){
 })
 
 //post function to upload
-app.post("/upload/",function (req,res)
-{
+app.post("/upload/",function (req,res){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files) {
 		for (f in files)
@@ -98,6 +100,10 @@ app.get("/*", function(req,res){
 
 })
 
+//Starter Shell for Zipper
+app.post("/zip",function(req,res)){
+
+}
 
 
 //Listen on Port 8000
