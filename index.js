@@ -9,6 +9,8 @@
 //CSS
 //Make New Dir
 
+//To Do: authetication
+
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
@@ -50,7 +52,7 @@ app.post('/list/', function (req, res) {
 //Post Function To get File
 app.post("/filez/", function (req,res){
 	terms = req.body
-	file = "/filez/"+terms['file']
+	file = terms['file']
 	res.sendFile(file)
 })
 
