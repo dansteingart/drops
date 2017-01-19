@@ -27,7 +27,6 @@ app.post('/list/', function (req, res) {
 	terms = req.body
 	glob("/filez/"+unescape(terms['search'])+"/*", function (er, files)
 	{
-		console.log(terms['search'])
 		bigout = [];
 		for (f in files)
 		{
@@ -36,6 +35,8 @@ app.post('/list/', function (req, res) {
 				end = bigout.length
 				bigout[end] = fs.statSync(files[f])
 				bigout[end]['name'] = files[f]
+				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
+				
 
 			}
 			catch(e){}

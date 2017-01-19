@@ -115,6 +115,8 @@
 	}
 
 
+	inspector = null
+
 	function getDir()
 	{
 	toget = window.location.pathname.slice(1)
@@ -125,7 +127,9 @@
 		data.reverse()
 		for (d in data)
 		{
+			inspector = data
 			nameo = linker(data[d]['name'])
+			if (data[d]['is_dir']) nameo+="/"
 			mtime = data[d]['mtime']
 			size  = sizer(data[d]['size'])
 			doop =nameo+"||||"+size +"||||"+mtime+"\n"
