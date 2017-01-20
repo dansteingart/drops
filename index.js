@@ -98,7 +98,7 @@ app.get("/*", function(req,res){
 		else
 		{
 			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			else res.sendFile(ind)
+			res.sendFile(ind)
 		}
 
 })
