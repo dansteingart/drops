@@ -23,7 +23,7 @@ var multiparty = require('multiparty');
 var mv = require('mv')
 
 //auth
-var authentication = require('express-authentication'),
+var authentication = require('express-authentication');
 var basic = require('express-authentication-basic');
 var auth = authentication()
 
