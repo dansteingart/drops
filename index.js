@@ -108,10 +108,7 @@ app.get("/*", function(req,res){
 
 		if (path =="/robots.txt") tts = __dirname+'/robots.txt'
 		else if (path.search("/static/") == 0) tts = __dirname+path
-		else if (fs.existsSync(file))
-		{
-			if (fs.lstatSync(file).isFile()) tts = file
-		}
+		else if (fs.existsSync(file)) { if (fs.lstatSync(file).isFile()) tts = file }
 
 		if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
 		else res.sendFile(tts,function(err){if (err) res.status(404).send("whatever you think you want, you don't")})
