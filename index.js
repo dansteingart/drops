@@ -44,8 +44,6 @@ var auth = function (req, res, next) {
   };
 };
 
-
-
 // http://stackoverflow.com/a/27855234/565514
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -61,7 +59,7 @@ app.post('/list/',auth,function (req, res) {
 			try{
 				end = bigout.length
 				bigout[end] = fs.statSync(files[f])
-				bigout[end]['name'] = files[f]
+				bigout[end]['name'] = files[f].replace("/filez/","/")
 				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
 			}
 			catch(e){}
@@ -75,7 +73,7 @@ app.post('/list/',auth,function (req, res) {
 //Post Function To get File
 app.post("/filez/",auth,function (req,res){
 	terms = req.body
-	file = terms['file']
+	file = "/filez/"+terms['file']
 	res.sendFile(file)
 })
 
