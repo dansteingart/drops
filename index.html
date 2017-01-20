@@ -68,7 +68,6 @@
 		{
 			out+="<tr>"
 			ii = p[i].split("||||")
-
 			for (j in ii)
 			{
 				out += "<td>"+ii[j]+"</td>"
@@ -106,7 +105,7 @@
 	search = {'search':toget}
 	out = ""
 	$.post("/list/",search,function(data) {
-		data = sortByKey(data,'mtime')
+		if (data.length > 1)data = sortByKey(data,'mtime')
 		data.reverse()
 		for (d in data)
 		{
