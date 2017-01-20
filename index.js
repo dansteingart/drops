@@ -79,10 +79,13 @@ app.post("/upload/",function (req,res){
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
-  console.log(req.originalUrl)
+  path = req.originalUrl
 	var ind = __dirname+"/index.html"
 
-	if (fs.existsSync(file))
+	//At some point there's a better way to do this logic chain.  Unilt then....
+	if (path =="/robots.txt") res.sendFile('robots.txt')
+  else if (path.find("/static/") == -1) res.sendFile(path)
+	else if (fs.existsSync(file))
 	{
 		if (fs.lstatSync(file).isFile()) res.sendFile(file)
 		else
