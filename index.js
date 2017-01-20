@@ -83,7 +83,6 @@ app.get("/*", function(req,res){
 	var ind = __dirname+"/index.html"
 
 	//At some point there's a better way to do this logic chain.  Unilt then....
-	try {
 
 		if (path =="/robots.txt") res.sendFile(__dirname+'/robots.txt')
 		else if (path.search("/static/") == 0) res.sendFile(__dirname+p	th)
@@ -101,9 +100,6 @@ app.get("/*", function(req,res){
 			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
 			else res.sendFile(ind)
 		}
-	}
-	catch (e) {}
-	finally {}
 
 })
 
