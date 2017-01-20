@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //List All Files
-app.post('/list/', authentication.by(login).required(),function (req, res) {
+app.post('/list/',function (req, res) {
 	terms = req.body
 	glob("/filez/"+unescape(terms['search'])+"/*", function (er, files)
 	{
@@ -66,14 +66,14 @@ app.post('/list/', authentication.by(login).required(),function (req, res) {
 })
 
 //Post Function To get File
-app.post("/filez/", authentication.by(login).required(),function (req,res){
+app.post("/filez/",function (req,res){
 	terms = req.body
 	file = terms['file']
 	res.sendFile(file)
 })
 
 //post function to upload
-app.post("/upload/",authentication.by(login).required(),function (req,res){
+app.post("/upload/",function (req,res){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files) {
 		for (f in files)
@@ -94,7 +94,7 @@ app.post("/upload/",authentication.by(login).required(),function (req,res){
 })
 
 //Starter Shell for Zipper
-app.post("/zip",authentication.by(login).required(),function(req,res){
+app.post("/zip",function(req,res){
 
 })
 
