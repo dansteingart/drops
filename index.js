@@ -81,25 +81,17 @@ app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
   path = req.originalUrl
 	var ind = __dirname+"/index.html"
-
+  var tts = ind
 	//At some point there's a better way to do this logic chain.  Unilt then....
 
-		if (path =="/robots.txt") res.sendFile(__dirname+'/robots.txt')
-		else if (path.search("/static/") == 0) res.sendFile(__dirname+path)
+		if (path =="/robots.txt") tts = __dirname+'/robots.txt'
+		else if (path.search("/static/") == 0) tts = __dirname+path
 		else if (fs.existsSync(file))
 		{
-			if () res.sendFile(file)
-			else
-			{
-			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			else res.sendFile(ind)
-			}
+			if (fs.lstatSync(file).isFile()) tts = file
 		}
-		else
-		{
-			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			else res.sendFile(ind)
-		}
+
+		res.sendfile(tts)
 
 })
 
