@@ -45,9 +45,6 @@ var auth = function (req, res, next) {
 };
 
 
-app.use(auth);
-app.use(login);
-
 
 // http://stackoverflow.com/a/27855234/565514
 app.use(bodyParser.urlencoded({ extended: false }))
