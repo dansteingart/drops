@@ -92,7 +92,13 @@ app.get("/*", function(req,res){
 				if (fs.lstatSync(file).isFile()) tts = file
 			}
 			if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
-			else res.sendFile(tts)
+			else
+			{
+				try {res.sendFile(tts)}
+				catch(e){res.status(404).send('Not found')};
+
+			}
+
 		}
 		catch(e){res.status(404).send('Not found')};
 
