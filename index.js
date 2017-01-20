@@ -63,12 +63,12 @@ app.post("/upload/",function (req,res){
 		{
 			tmp  = files[f][0]['path']
 			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
-			console.log('uploading: '+goto )
 			goto = unescape(goto)
 			mv(tmp,goto,{mkdirp: true,clobber:false},function(err){
 				//at some point this shoujld throw the error
-				console.log(err)
-				res.send('{"status":"ok"}');
+				if (err == null)status = "ok"
+				else status = err
+				res.send({'status':status});
 			})
 		}
 
