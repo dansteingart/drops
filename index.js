@@ -117,7 +117,7 @@ app.get("/*", function(req,res){
 
 	//Send whatever tts, with the caveat that 1) directories need trailing slashes and 2) boilerplate that we don't have gets a 404
 	if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
-	else res.sendFile(tts,function(err){if (err) res.status(404).send("whatever you think you want, you don't")})
+	else res.sendFile(tts,function(err){if (err) res.status(404)})
 })
 
 
