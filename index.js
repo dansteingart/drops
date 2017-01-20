@@ -86,19 +86,11 @@ app.get("/*", function(req,res){
 
 		if (path =="/robots.txt") res.sendFile(__dirname+'/robots.txt')
 		else if (path.search("/static/") == 0) res.sendFile(__dirname+path)
-		else if (fs.existsSync(file))
-		{
-			if (fs.lstatSync(file).isFile()) res.sendFile(file)
-			else
-			{
-			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			else res.sendFile(ind)
-			}
-		}
+		else if (fs.existsSync(file) & fs.lstatSync(file).isFile() ) res.sendFile(file)
 		else
 		{
 			if (req.url.substr(-1) != "/") res.redirect(301, req.url+"/");
-			res.sendFile(ind)
+			else res.sendFile(ind)
 		}
 
 })
