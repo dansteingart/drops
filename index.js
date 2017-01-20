@@ -100,19 +100,24 @@ app.post("/zip",function(req,res){
 
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
-	file = "/filez"+unescape(req.originalUrl)
-  path = req.originalUrl
+	//get request
+	path = req.originalUrl
+	file = "/filez"+unescape(path)
+
+	//To start, assume we're going to serve an index
 	var ind = __dirname+"/index.html"
-  var tts = ind  //thing to send
-	//At some point there's a better way to do this logic chain.  Unilt then....
+	var tts = ind  //thing to send
 
-		if (path =="/robots.txt") tts = __dirname+'/robots.txt'
-		else if (path.search("/static/") == 0) tts = __dirname+path
-		else if (fs.existsSync(file)) { if (fs.lstatSync(file).isFile()) tts = file }
+	// if the request wants boiler plate send directly, don't look for directories
+	if (path =="/robots.txt") tts = __dirname+'/robots.txt'
+	else if (path.search("/static/") == 0) tts = __dirname+path
 
-		if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
-		else res.sendFile(tts,function(err){if (err) res.status(404).send("whatever you think you want, you don't")})
+	//else check to see if this is a file we can send directly
+	else if (fs.existsSync(file)) { if (fs.lstatSync(file).isFile()) tts = file }
 
+	//Send whatever tts, with the caveat that 1) directories need trailing slashes and 2) boilerplate that we don't have gets a 404
+	if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
+	else res.sendFile(tts,function(err){if (err) res.status(404).send("whatever you think you want, you don't")})
 })
 
 
