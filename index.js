@@ -26,7 +26,6 @@ var mv = require('mv')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
 //List All Files
 app.post('/list/', function (req, res) {
 	terms = req.body
@@ -35,14 +34,11 @@ app.post('/list/', function (req, res) {
 		bigout = [];
 		for (f in files)
 		{
-
 			try{
 				end = bigout.length
 				bigout[end] = fs.statSync(files[f])
 				bigout[end]['name'] = files[f]
 				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
-
-
 			}
 			catch(e){}
 		}
@@ -67,12 +63,12 @@ app.post("/upload/",function (req,res){
 		{
 			tmp  = files[f][0]['path']
 			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
+			console.log('uploading: '+goto )
 			goto = unescape(goto)
 			mv(tmp,goto,{mkdirp: true,clobber:false},function(err){
-				res.send('{"status":"ok"}');
-				console.log(goto)
+				//at some point this shoujld throw the error
 				console.log(err)
-
+				res.send('{"status":"ok"}');
 			})
 		}
 
@@ -83,7 +79,9 @@ app.post("/upload/",function (req,res){
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
+
 	var ind = __dirname+"/index.html"
+
 	if (fs.existsSync(file))
 	{
 		if (fs.lstatSync(file).isFile()) res.sendFile(file)

@@ -5,22 +5,14 @@
     <script src="/static/dmuploader.min.js"></script>
 
 	<style>
-	body { font-family: Helvetica; font-size: 12px; width:900px; }
-	table { font-family: Helvetica; font-size: 12px; }
-	a {color:red;text-decoration:none;}
-	h2 {color:gray;}
-
-	a:hover{color:silver;}
-
-	td { min-width:150px;}
-
-	tr:nth-child(even) { background-color: #EEE;}
-
-	.right{ float:right; width: 150px;}
-
-	.main{width:750px;}
-
-
+		body{ font-family: Helvetica; font-size: 12px; width:900px;}
+		a {color:red;text-decoration:none;}
+		a:hover{color:silver;}
+		.right{ float:right; width: 150px;}
+		.main{width:750px;}
+		table { width:100%; font-size:12px;}
+		td { min-width:150px; }
+		tr:nth-child(even) { background-color: #EEE;}
 	</style>
 
 </head>
@@ -43,15 +35,8 @@
 </div>
 <script>
 
-	foop = window.location.pathname.split("/").slice(1,-1)
-	lanks = ""
-	out = "/"
-	for (f in foop) 
-	{
-			out+=foop[f]+"/"
-			lanks += "<a href='"+out+"'>"+unescape(foop[f])+"</a>/"
-	}  
-	$("#sub").html("you are in "+lanks)
+	foop = window.location.pathname.slice(1)
+	$("#sub").html("you are here: "+foop)
 
 	//http://stackoverflow.com/a/8175221/565514
 	function sortByKey(array, key) {
@@ -82,9 +67,9 @@
 
 	function sizer(nums)
 	{
-		if (nums > 1e9) 		nums = Math.round(nums/1e7)/100 + " G"
-		else if (nums > 1e6)	nums = Math.round(nums/1e4)/100 + " M"
-		else if (nums > 1e3)	nums = Math.round(nums/1e1)/100 + " K"
+		if (nums > 1e9) 		nums = Math.round(nums/1e9) + " G"
+		else if (nums > 1e6)	nums = Math.round(nums/1e6) + " M"
+		else if (nums > 1e3)	nums = Math.round(nums/1e3) + " K"
 		else nums = 			nums + " B"
 		return nums
 
