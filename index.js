@@ -21,13 +21,33 @@ var glob = require("glob")
 var fs = require('fs');
 var multiparty = require('multiparty');
 var mv = require('mv')
+var basicAuth = require('basic-auth');
+
+var auth = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.send(401);
+  };
+
+  var user = basicAuth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === 'foo' && user.pass === 'bar') {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
 
 // http://stackoverflow.com/a/27855234/565514
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //List All Files
-app.post('/list/', function (req, res) {
+app.post('/list/', auth,function (req, res) {
 	terms = req.body
 	glob("/filez/"+unescape(terms['search'])+"/*", function (er, files)
 	{
@@ -49,14 +69,14 @@ app.post('/list/', function (req, res) {
 })
 
 //Post Function To get File
-app.post("/filez/", function (req,res){
+app.post("/filez/", auth,function (req,res){
 	terms = req.body
 	file = terms['file']
 	res.sendFile(file)
 })
 
 //post function to upload
-app.post("/upload/",function (req,res){
+app.post("/upload/",auth,function (req,res){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files) {
 		for (f in files)
@@ -97,7 +117,7 @@ app.get("/*", function(req,res){
 })
 
 //Starter Shell for Zipper
-app.post("/zip",function(req,res){
+app.post("/zip",auth,function(req,res){
 
 })
 
