@@ -81,7 +81,7 @@ app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
   path = req.originalUrl
 	var ind = __dirname+"/index.html"
-  var tts = ind
+  var tts = ind  //thing to send
 	//At some point there's a better way to do this logic chain.  Unilt then....
 
 		if (path =="/robots.txt") tts = __dirname+'/robots.txt'
@@ -91,7 +91,8 @@ app.get("/*", function(req,res){
 			if (fs.lstatSync(file).isFile()) tts = file
 		}
 
-		res.sendfile(tts)
+		if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
+		else res.sendfile(tts)
 
 })
 
