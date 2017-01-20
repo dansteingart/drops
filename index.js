@@ -85,7 +85,7 @@ app.get("/*", function(req,res){
 	//At some point there's a better way to do this logic chain.  Unilt then....
 
 		if (path =="/robots.txt") res.sendFile(__dirname+'/robots.txt')
-		else if (path.search("/static/") == 0) res.sendFile(__dirname+p	th)
+		else if (path.search("/static/") == 0) res.sendFile(__dirname+path)
 		else if (fs.existsSync(file))
 		{
 			if (fs.lstatSync(file).isFile()) res.sendFile(file)
