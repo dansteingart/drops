@@ -105,8 +105,11 @@
 	search = {'search':toget}
 	out = ""
 	$.post("/list/",search,function(data) {
-		if (data.length > 1)data = sortByKey(data,'mtime')
-		data.reverse()
+		if (data.length > 1)
+		{
+			data = sortByKey(data,'mtime')
+			data.reverse()
+		}
 		for (d in data)
 		{
 			inspector = data
