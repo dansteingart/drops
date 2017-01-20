@@ -92,7 +92,7 @@ app.get("/*", function(req,res){
 		}
 
 		if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
-		else res.sendFile(tts,function(err){if (err) res.status(404).send("not found")})
+		else res.sendFile(tts,function(err){if (err) res.status(404).send("whatever you think you want, you don't")})
 
 })
 
