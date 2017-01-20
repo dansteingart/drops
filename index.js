@@ -79,7 +79,7 @@ app.post("/upload/",function (req,res){
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
 	file = "/filez"+unescape(req.originalUrl)
-
+  console.log(req.originalUrl)
 	var ind = __dirname+"/index.html"
 
 	if (fs.existsSync(file))
