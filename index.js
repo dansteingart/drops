@@ -8,11 +8,11 @@
 //	- Uploads
 //	- Basic CSS
 //	- Make New Dir
+// - authetication
 
 //To Do:
 // - auto zip
 // - better css
-// - authetication
 
 var express = require('express')
 var bodyParser = require('body-parser')
@@ -25,7 +25,6 @@ var randomstring = require("randomstring");
 
 //auth
 var basicAuth = require('basic-auth');
-
 var gen_user = randomstring.generate();
 var gen_pass = randomstring.generate();
 
@@ -37,18 +36,12 @@ var auth = function (req, res, next) {
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
     return res.send(401);
   };
-
   var user = basicAuth(req);
 
-  if (!user || !user.name || !user.pass) {
-    return unauthorized(res);
-  };
+  if (!user || !user.name || !user.pass) { return unauthorized(res);};
 
-  if (user.name === gen_user && user.pass === gen_pass) {
-    return next();
-  } else {
-    return unauthorized(res);
-  };
+  if (user.name === gen_user && user.pass === gen_pass) {return next();}
+  else {return unauthorized(res);};
 };
 
 // http://stackoverflow.com/a/27855234/565514
@@ -102,13 +95,10 @@ app.post("/upload/",auth,function (req,res){
 		}
 
 	});
-
 })
 
 //Starter Shell for Zipper
-app.post("/zip",auth,function(req,res){
-
-})
+app.post("/zip",auth,function(req,res){ })
 
 //Likely Over-Overloaded Get function
 app.get("/*", function(req,res){
@@ -131,8 +121,6 @@ app.get("/*", function(req,res){
 	if ((tts == ind) & (req.url.substr(-1) != "/")) res.redirect(301, req.url+"/");
 	else res.sendFile(tts,function(err){if (err) res.status(404).end("these are not the drops you're looking for")})
 })
-
-
 
 //Listen on Port 8000
 port = 8000;
