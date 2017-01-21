@@ -26,8 +26,8 @@ var randomstring = require("randomstring");
 //auth
 var basicAuth = require('basic-auth');
 
-var user = randomstring.generate();
-var pass = randomstring.generate();
+var gen_user = randomstring.generate();
+var gen_pass = randomstring.generate();
 
 console.log("user: "+user);
 console.log("pass:" + pass);
@@ -44,7 +44,7 @@ var auth = function (req, res, next) {
     return unauthorized(res);
   };
 
-  if (user.name === user && user.pass === pass) {
+  if (user.name === gen_user && user.pass === gen_pass) {
     return next();
   } else {
     return unauthorized(res);
