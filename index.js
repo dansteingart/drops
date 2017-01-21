@@ -29,8 +29,8 @@ var basicAuth = require('basic-auth');
 var gen_user = randomstring.generate();
 var gen_pass = randomstring.generate();
 
-console.log("user: "+user);
-console.log("pass:" + pass);
+console.log("user: " + gen_user);
+console.log("pass: " + gen_pass);
 
 var auth = function (req, res, next) {
   function unauthorized(res) {
