@@ -27,7 +27,7 @@ var randomstring = require("randomstring");
 var basicAuth = require('basic-auth');
 
 var user = randomstring.generate();
-var pass randomstring.generate();
+var pass = randomstring.generate();
 
 console.log("user: "+user);
 console.log("pass:" + pass);
