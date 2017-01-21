@@ -21,9 +21,16 @@ var glob = require("glob")
 var fs = require('fs');
 var multiparty = require('multiparty');
 var mv = require('mv')
+var randomstring = require("randomstring");
 
 //auth
 var basicAuth = require('basic-auth');
+
+var user = randomstring.generate();
+var pass randomstring.generate();
+
+console.log("user: "+user);
+console.log("pass:" + pass);
 
 var auth = function (req, res, next) {
   function unauthorized(res) {
@@ -37,7 +44,7 @@ var auth = function (req, res, next) {
     return unauthorized(res);
   };
 
-  if (user.name === 'foo' && user.pass === 'bar') {
+  if (user.name === user && user.pass === pass) {
     return next();
   } else {
     return unauthorized(res);
