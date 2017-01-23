@@ -25,8 +25,13 @@ var randomstring = require("randomstring");
 
 //auth
 var basicAuth = require('basic-auth');
+
 var gen_user = randomstring.generate();
 var gen_pass = randomstring.generate();
+
+if (process.env.GEN_USER != undefined) gen_user = process.env.GEN_USER
+if (process.env.GEN_PASS != undefined) gen_pass = process.env.GEN_PASS
+
 
 console.log("user: " + gen_user);
 console.log("pass: " + gen_pass);
