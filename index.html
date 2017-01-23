@@ -125,10 +125,10 @@
 			out += doop
 		}
 		$("#test").html(csv_to_table(out.trim()))
+		setTimeout(function(){getDir()},10000)
 
 	})
 	}
-
 
 	getDir()
 
@@ -158,7 +158,7 @@
 		}
 	);
 
-	setInterval(function(){getDir()},10000)
+	//setInterval(function(){getDir()},10000)
 
 </script>
 
