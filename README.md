@@ -11,7 +11,9 @@ The docker image always uses the head of this repo.
 
 To run the docker image type
   ```
-  docker run -p 8200:8000 -v /path/to/files/:/filez/ -dit --name drops steingart/pithy
+  docker run -p 8200:8000 \
+  -v /path/to/files/:/filez/ \
+  -dit --name drops steingart/pithy
   ```
 
 where `8200` is the port which is available on your host, and `/path/to/files` is where you want to store the dropped files on your host, and `drops` is what I named the container. These can all change. Everything else should be the same
@@ -27,10 +29,10 @@ docker logs drops
 **if you want to set a username/password**, use these environment variables.  
 
 ```
-docker run -p 8200:8000 \n
--v /path/to/files/:/filez/ \n
--e GEN_USER=usernamemakeitdifficult \n
--e GEN_PASS=passwordmakeitevenmoredifficult \n
+docker run -p 8200:8000 \
+-v /path/to/files/:/filez/ \
+-e GEN_USER=usernamemakeitdifficult \
+-e GEN_PASS=passwordmakeitevenmoredifficult \
 -dit --name drops steingart/pithy
 ```
 this is the equivalent of, within the operating system, saying at run time
@@ -42,7 +44,7 @@ export GEN_PASS=passwordmakeitevenmoredifficult
 
 **A node on authentication**: to see directory contents/upload anything you need to enter the username/password. To see a direct file line _you do not_ need a username/password. The idea here is that direct link to files are useful for emails, and if someone has the full url we assume they should be able to see the file. But without the user/pass combo they cannot peruse the drops nor upload files.
 
-Don't like it?  You've got the code here cowperson, change it!
+Don't like it?  You've got the code [here](https://github.com/dansteingart/drops) cowperson, change it!
 
 #Run Without Docker
 See above. If you really must run uncontainerized for whatever reason, the program will try to write to `/filez/` as a base directory. If `/filez/` is not to your liking, go to line 27.
