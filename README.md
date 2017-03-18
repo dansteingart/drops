@@ -13,7 +13,7 @@ To run the docker image type
   ```
   docker run -p 8200:8000 \
   -v /path/to/files/:/filez/ \
-  -dit --name drops steingart/pithy
+  -dit --name drops steingart/drops
   ```
 
 where `8200` is the port which is available on your host, and `/path/to/files` is where you want to store the dropped files on your host, and `drops` is what I named the container. These can all change. Everything else should be the same
@@ -33,7 +33,7 @@ docker run -p 8200:8000 \
 -v /path/to/files/:/filez/ \
 -e GEN_USER=usernamemakeitdifficult \
 -e GEN_PASS=passwordmakeitevenmoredifficult \
--dit --name drops steingart/pithy
+-dit --name drops steingart/drops
 ```
 this is the equivalent of, within the operating system, saying at run time
 ```
