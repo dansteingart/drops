@@ -1,0 +1,84 @@
+<html>
+<head>
+  <style>
+  .hidden {display: none !important; }
+  .full {width:100%;height:100%;}
+  </style>
+  <script
+    src="https://code.jquery.com/jquery-3.2.0.min.js"
+    integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.10.3/paper-full.min.js"></script>
+<script type="text/paperscript" canvas="myCanvas">
+
+var raster = new Raster('mona');
+
+// Move the raster to the center of the view
+raster.position = view.center;
+
+// Scale the raster by 50%
+raster.scale(1);
+
+// Rotate the raster by 45 degrees:
+raster.rotate(90);
+
+// We start by defining an empty variable that is visible by both
+// mouse handlers.
+
+var path;
+var text;
+// Only execute onMouseDrag when the mouse
+// has moved at least 10 points:
+tool.distanceThreshold = 10;
+start = 0
+foop = null
+tool.onMouseDown = function(event) {
+    // Create a new path every time the mouse is clicked
+    path = new Path();
+    console.log(path)
+    start = event.point;
+    path.add(start);
+    path.add(start);
+    path.strokeColor = 'red';
+     text = new PointText({
+	      position: start,
+	      justification: 'center',
+	       fontSize: 30,
+	        fillColor: 'black'
+        });
+
+}
+
+tool.onMouseDrag = function(event) {
+    end = path.segments.length;
+    path.segments[end-1].point.set(event.point)
+    vector = event.point - start
+    console.log(vector)
+    text.position = vector
+    text.content = path.length
+}
+
+tool.onMouseUp = function(event) {
+    // Add a point to the path every time the mouse is dragged
+    path.strokeColor = 'black';
+    foop = path
+}
+
+</script>
+
+
+</head>
+
+<body>
+<canvas id="myCanvas" class="full" resize></canvas>
+
+<script>
+</script>
+
+<img class="hidden" id="mona" src="mona.jpg"></img>
+
+</body>
+
+
+</html>
