@@ -26,17 +26,41 @@ raster.rotate(90);
 // We start by defining an empty variable that is visible by both
 // mouse handlers.
 
+var hitOptions = {
+	segments: true,
+	stroke: true,
+	fill: false,
+  pixel:false;
+	tolerance: 5
+};
+
 var path;
 var text;
+
 // Only execute onMouseDrag when the mouse
 // has moved at least 10 points:
 tool.distanceThreshold = 10;
 start = 0
 foop = null
+toop = null
+foops = []
+toops = []
+
+new_hit = false
+hh = null
+
 tool.onMouseDown = function(event) {
     // Create a new path every time the mouse is clicked
+
+    var hitResult = project.hitTest(event.point, hitOptions);
+    hh = hitResult
+    console.log(hitResult)
+
+    if (!hitResult || hitResult.type == "pixel") new_hit = true
+    else new_hit = false
+
+    if (new_hit){
     path = new Path();
-    console.log(path)
     start = event.point;
     path.add(start);
     path.add(start);
@@ -44,25 +68,51 @@ tool.onMouseDown = function(event) {
      text = new PointText({
 	      position: start,
 	      justification: 'center',
-	       fontSize: 30,
+	       fontSize: 12,
 	        fillColor: 'black'
         });
-
+      }
 }
 
-tool.onMouseDrag = function(event) {
-    end = path.segments.length;
-    path.segments[end-1].point.set(event.point)
-    vector = event.point - start
-    console.log(vector)
-    text.position = vector
-    text.content = path.length
+
+tool.onMouseDrag = function(event) {s
+
+
+    if (new_hit)
+    {
+
+      end = path.segments.length;
+      path.segments[end-1].point.set(event.point)
+      vector = start+event.point
+      text.position = vector/2
+      text.content = parseInt(path.length)
+
+    }
+
+    else if (hh.type == "stroke")
+    {
+      hh.item.position += event.delta
+      for (t in toops){
+        if (toops[t].idd == hh.item.length) toops[t].position += event.delta
+
+      }
+    }
+
 }
 
 tool.onMouseUp = function(event) {
     // Add a point to the path every time the mouse is dragged
-    path.strokeColor = 'black';
-    foop = path
+    if(new_hit)
+    {
+      idd = new Date().getTime()
+      path.strokeColor = 'black';
+      text.idd = path.length
+      path.idd = idd
+      foop = path
+      toop = text
+      foops[foops.length] = foop
+      toops[toops.length] = toop
+    }
 }
 
 </script>
