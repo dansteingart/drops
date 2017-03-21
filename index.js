@@ -11,6 +11,7 @@
 // - authetication
 
 //To Do:
+// - image handling
 // - auto zip
 // - better css
 

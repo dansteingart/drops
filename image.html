@@ -30,7 +30,7 @@ var hitOptions = {
 	segments: true,
 	stroke: true,
 	fill: false,
-  pixel:false;
+  pixel:false,
 	tolerance: 5
 };
 
@@ -75,18 +75,14 @@ tool.onMouseDown = function(event) {
 }
 
 
-tool.onMouseDrag = function(event) {s
-
-
+tool.onMouseDrag = function(event) {
     if (new_hit)
     {
-
       end = path.segments.length;
       path.segments[end-1].point.set(event.point)
       vector = start+event.point
       text.position = vector/2
       text.content = parseInt(path.length)
-
     }
 
     else if (hh.type == "stroke")
@@ -122,9 +118,6 @@ tool.onMouseUp = function(event) {
 
 <body>
 <canvas id="myCanvas" class="full" resize></canvas>
-
-<script>
-</script>
 
 <img class="hidden" id="mona" src="mona.jpg"></img>
 
