@@ -51,9 +51,10 @@
 	out = "/"
 	for (f in foop)
 	{
-			out+=foop[f]+"/"
-			lanks += "<a href='"+out+"'>"+unescape(foop[f])+"</a>/"
+		out+=foop[f]+"/"
+		lanks += "<a href='"+out+"'>"+unescape(foop[f])+"</a>/"
 	}
+
 	$("#sub").html("you are in "+lanks)
 
 	//http://stackoverflow.com/a/8175221/565514
@@ -84,10 +85,10 @@
 
 	function sizer(nums)
 	{
-		if (nums > 1e9) 		nums = Math.round(nums/1e7)/100 + " G"
+		if (nums > 1e9) 	nums = Math.round(nums/1e7)/100 + " G"
 		else if (nums > 1e6)	nums = Math.round(nums/1e4)/100 + " M"
 		else if (nums > 1e3)	nums = Math.round(nums/1e1)/100 + " K"
-		else nums = 			nums + " B"
+		else nums = 		nums + " B"
 		return nums
 
 	}
@@ -119,8 +120,8 @@
 			nameo = linker(data[d]['name'])
 			if (data[d]['is_dir']) nameo+="/"
 			mtime = data[d]['mtime']
-			size  = sizer(data[d]['size'])
-			doop =nameo+"||||"+size +"||||"+mtime+"\n"
+			size = sizer(data[d]['size'])
+			doop = nameo+"||||"+size +"||||"+mtime+"\n"
 			out += doop
 		}
 		$("#test").html(csv_to_table(out.trim()))
@@ -156,8 +157,6 @@
 			onUploadProgress: function(id, percent){uploadStatus(going.name+": "+percent+"%")}
 		}
 	);
-
-	//setInterval(function(){getDir()},10000)
 
 </script>
 
