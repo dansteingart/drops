@@ -126,7 +126,7 @@
 			out += doop
 		}
 		$("#test").html(csv_to_table(out.trim()))
-		setTimeout(function(){getDir()},10000)
+		setTimeout(function(){getDir()},5000)
 
 	})
 	}
@@ -166,7 +166,11 @@
 	)
 	
 	//thanks stack! https://stackoverflow.com/a/26421902/565514
-	dd.on('success',function(){getDir()});
+	Dropzone.options.myAwesomeDropzone = {
+	  init: function() {
+	    this.on("addedfile", function(file) { alert("Added file."); });
+	  }
+	};
 	
 
 
