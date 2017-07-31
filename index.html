@@ -3,6 +3,7 @@
 	<title>Wait For It</title>
     <script src="/static/jquery.min.js"></script>
     <script src="/static/dmuploader.min.js"></script>
+<script src="/static/dropzone.js"></script>
 
 	<style>
 	body { font-family: Helvetica; font-size: 12px; width:900px; }
@@ -145,18 +146,21 @@
 		for (q in qq) 		out += qq[q].name+":"+qq[q].size+";<br>"
 		$("#queue_upload").html(out)
 	}
+	//
+	// $("#drop-area-div").dmUploader(
+	// 	{
+	// 		url:'/upload/',
+	// 		extraData:{path:window.location.pathname},
+	// 		dataType: 'json',
+	// 		onNewFile: function(id, file){qq[id]=file},
+	// 		onBeforeUpload: function(id){going = qq[id];delete(qq[id]); queueStatus()},
+	//         onUploadSuccess: function(id,data){getDir();uploadStatus("")},
+	// 		onUploadProgress: function(id, percent){uploadStatus(going.name+": "+percent+"%")}
+	// 	}
+	// );
 
-	$("#drop-area-div").dmUploader(
-		{
-			url:'/upload/',
-			extraData:{path:window.location.pathname},
-			dataType: 'json',
-			onNewFile: function(id, file){qq[id]=file},
-			onBeforeUpload: function(id){going = qq[id];delete(qq[id]); queueStatus()},
-	        onUploadSuccess: function(id,data){getDir();uploadStatus("")},
-			onUploadProgress: function(id, percent){uploadStatus(going.name+": "+percent+"%")}
-		}
-	);
+	$("#drop-area-div").dropzone({ url: "/upload/" });
+
 
 </script>
 
