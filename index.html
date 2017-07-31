@@ -174,7 +174,7 @@
 				});
 				this.on("uploadprogress",function(pr,bs){
 					bs = Math.round(bs*100)/100
-					uploadStatus(+'%');
+					uploadStatus(bs+'%');
 					console.log(bs);
 					
 				});
