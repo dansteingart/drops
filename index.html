@@ -161,9 +161,12 @@
 
 	$("#drop-area-div").dropzone(
 		{ url: "/upload/",
-    	  params:{path:window.location.pathname}
+    	  params:{path:window.location.pathname},
 		}
-);
+	);
+	
+	//thanks stack! https://stackoverflow.com/a/26421902/565514
+	$("#drop-area-div").on('success',function(){getDir()});
 
 
 </script>
