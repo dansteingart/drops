@@ -89,6 +89,7 @@ app.post("/upload/",auth,function (req,res){
 		for (f in files)
 		{
 			tmp  = files[f][0]['path']
+			console.log(tmp)
 			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
 			console.log(goto)
 			goto = unescape(goto)
