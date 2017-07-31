@@ -172,8 +172,8 @@
 					console.log(file);
 				});
 				this.on("uploadprogress",function(pr,bs){
-					uploadStatus(pr);
-					console.log(pr);
+					uploadStatus(bs.toString()+'%');
+					console.log(bs);
 					
 				});
 			
