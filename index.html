@@ -159,20 +159,23 @@
 	// 	}
 	// );
 
+
+	//thanks stack! https://stackoverflow.com/a/26421902/565514
+	Dropzone.options.myAwesomeDropzone = {
+	  init: function() {
+	    this.on("complete", function() { getDir();});
+	  }
+	};
+	
+
+
+
 	var dd = $("#drop-area-div").dropzone(
 		{ url: "/upload/",
     	  params:{path:window.location.pathname},
 		}
 	)
 	
-	//thanks stack! https://stackoverflow.com/a/26421902/565514
-	Dropzone.options.myAwesomeDropzone = {
-	  init: function() {
-	    this.on("addedfile", function(file) { alert("Added file."); });
-	  }
-	};
-	
-
 
 </script>
 
