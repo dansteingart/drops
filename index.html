@@ -159,7 +159,11 @@
 	// 	}
 	// );
 
-	$("#drop-area-div").dropzone({ url: "/upload/" });
+	$("#drop-area-div").dropzone(
+		{ url: "/upload/",
+    	  params:{path:window.location.pathname}
+		}
+);
 
 
 </script>
