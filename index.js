@@ -82,7 +82,7 @@ app.post("/filez/",auth,function (req,res){
 	res.sendFile(file)
 })
 
-//post function to upload
+// post function to upload
 app.post("/upload/",auth,function (req,res){
 	var form = new multiparty.Form();
 	form.parse(req, function(err, fields, files) {
@@ -90,6 +90,7 @@ app.post("/upload/",auth,function (req,res){
 		{
 			tmp  = files[f][0]['path']
 			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
+			console.log(goto)
 			goto = unescape(goto)
 			mv(tmp,goto,{mkdirp: true,clobber:false},function(err){
 				//at some point this shoujld throw the error
