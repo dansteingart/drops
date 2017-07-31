@@ -159,12 +159,14 @@
 	// 	}
 	// );
 
-	$("#drop-area-div").dropzone(
+	var dd = $("#drop-area-div").dropzone(
 		{ url: "/upload/",
     	  params:{path:window.location.pathname},
 		}
-	).on('success',function(){getDir()});
+	)
+	
 	//thanks stack! https://stackoverflow.com/a/26421902/565514
+	dd.on('success',function(){getDir()});
 	
 
 
