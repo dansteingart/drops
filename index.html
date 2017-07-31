@@ -163,10 +163,9 @@
 		{ url: "/upload/",
     	  params:{path:window.location.pathname},
 		}
-	);
-	
+	).on('success',function(){getDir()});
 	//thanks stack! https://stackoverflow.com/a/26421902/565514
-	$("#drop-area-div").on('success',function(){getDir()});
+	
 
 
 </script>
