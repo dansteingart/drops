@@ -169,10 +169,12 @@
 			{
 			    this.on("success", function(file) {
 					getDir();
+					uploadStatus('Done!')
 					console.log(file);
 				});
 				this.on("uploadprogress",function(pr,bs){
-					uploadStatus(bs.toString()+'%');
+					bs = Math.round(bs*100)/100
+					uploadStatus(+'%');
 					console.log(bs);
 					
 				});
