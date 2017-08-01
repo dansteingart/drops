@@ -33,9 +33,9 @@ there are different shortcuts, instead of setting correct argument
 ```js
 var setHeader = require('setheaders');
 
-var setProctedHeader = setHeader.setProctedHeader; // protected = true
-var setOverrideHeader = setHeader.setOverrideHeader; // override = true
-var setWritableHeader = setHeader.setWritableHeader; // writable = true
+var setProctedHeader  = setHeader.setProctedHeader;  // protected = true
+var setOverrideHeader = setHeader.setOverrideHeader; // override  = true
+var setWritableHeader = setHeader.setWritableHeader; // writable  = true
 ```
 
 ### setheaders(res, name, value [, protected [, override [, writable] ] ])
