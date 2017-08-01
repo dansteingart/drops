@@ -104,36 +104,42 @@
 
 
 	inspector = null
+    
+	//am I fetching
+    var getget = false;
 
-	function getDir()
-	{
-	toget = window.location.pathname.slice(1)
-	search = {'search':toget}
-	out = ""
-	$.post("/list/",search,function(data) {
-		if (data.length > 1)
-		{
-			data = sortByKey(data,'mtime')
-			data.reverse()
-		}
-		for (d in data)
-		{
-			inspector = data
-			nameo = linker(data[d]['name'])
-			if (data[d]['is_dir']) nameo+="/"
-			mtime = data[d]['mtime']
-			size = sizer(data[d]['size'])
-			doop = nameo+"||||"+size +"||||"+mtime+"\n"
-			out += doop
-		}
-		$("#test").html("")
-		$("#test").html(csv_to_table(out.trim()))
-		setTimeout(function(){getDir()},5000)
+    function getDir()
+    {
+    getget=true; //flag up
+    toget = window.location.pathname.slice(1)
+    search = {'search':toget}
+    out = ""
+    $.post("/list/",search,function(data) {
+            if (data.length > 1)
+            {
+                    data = sortByKey(data,'mtime')
+                    data.reverse()
+            }
+            for (d in data)
+            {
+                    inspector = data
+                    nameo = linker(data[d]['name'])
+                    if (data[d]['is_dir']) nameo+="/"
+                    mtime = data[d]['mtime']
+                    size = sizer(data[d]['size'])
+                    doop = nameo+"||||"+size +"||||"+mtime+"\n"
+                    out += doop
+            }
+            $("#test").html("")
+            $("#test").html(csv_to_table(out.trim()))
+            //setTimeout(function(){getDir()},5000)
+            getget = false; //flagdown
 
-	})
-	}
+    })
+    }
 
-	getDir()
+    setInterval(function(){if (!getget) getDir();},5000)
+    getDir()
 
 	//Upload Status Functions
 
