@@ -22,6 +22,9 @@ var fs = require('fs');
 var multiparty = require('multiparty');
 var mv = require('mv')
 var randomstring = require("randomstring");
+var argv = require('minimist')(process.argv.slice(2));
+console.dir(argv);
+
 
 //auth
 var basicAuth = require('basic-auth');
@@ -30,23 +33,33 @@ var gen_user = randomstring.generate();
 var gen_pass = randomstring.generate();
 
 if (process.env.GEN_USER != undefined) gen_user = process.env.GEN_USER
+else if (argv['user'] != undefined)    gen_user = argv['pass'] ;
+
 if (process.env.GEN_PASS != undefined) gen_pass = process.env.GEN_PASS
+else if (argv['pass'] != undefined)    gen_user = argv['pass'] ;
 
 
 console.log("user: " + gen_user);
 console.log("pass: " + gen_pass);
 
 var auth = function (req, res, next) {
-  function unauthorized(res) {
-    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-    return res.send(401);
-  };
-  var user = basicAuth(req);
-
-  if (!user || !user.name || !user.pass) { return unauthorized(res);};
-
-  if (user.name === gen_user && user.pass === gen_pass) {return next();}
-  else {return unauthorized(res);};
+	if (argv['auth'] != 'false')
+	{
+	  function unauthorized(res) {
+	    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+	    return res.send(401);
+	  };
+	  var user = basicAuth(req);
+	
+	  if (!user || !user.name || !user.pass) { return unauthorized(res);};
+	
+	  if (user.name === gen_user && user.pass === gen_pass) {return next();}
+	  else {return unauthorized(res);};
+	}
+	else {
+		console.log('skip auth')
+		next()
+		};
 };
 
 // http://stackoverflow.com/a/27855234/565514
@@ -130,7 +143,9 @@ app.get("/*", function(req,res){
 })
 
 //Listen on Port 8000
-port = 8000;
+var port = 8000;
+if (argv['p'] != undefined) port = argv['p']
+
 app.listen(port, function () {
   console.log('Example app listening on port '+port+'!')
 })
