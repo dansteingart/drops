@@ -2,8 +2,7 @@
 <head>
 	<title>Wait For It</title>
     <script src="/static/jquery.min.js"></script>
-    <script src="/static/dmuploader.min.js"></script>
-<script src="/static/dropzone.js"></script>
+	<script src="/static/dropzone.js"></script>
 
 	<style>
 	body { font-family: Helvetica; font-size: 12px; width:900px; }
@@ -32,10 +31,10 @@
 	<hr>
 <div class="right">
 	<div id="drop-area-div" >
-  	  Drag / Drop Files Here
-			<label>
-				<input type="file" name="files[]" multiple="multiple" title='Click to add Files'>
-			</label>
+  	  Click or Drag / Drop Files Here To Upload
+			<!--<label>-->
+			<!--	<input type="file" name="files[]" multiple="multiple" title='Click to add Files'>-->
+			<!--</label>-->
 	</div>
 
 	<div id="cur_upload"></div>
@@ -113,8 +112,9 @@
     getget=true; //flag up
     toget = window.location.pathname.slice(1)
     search = {'search':toget}
-    out = ""
     $.post("/list/",search,function(data) {
+		    out = ""
+            $("#test").html("")
             if (data.length > 1)
             {
                     data = sortByKey(data,'mtime')
@@ -130,7 +130,6 @@
                     doop = nameo+"||||"+size +"||||"+mtime+"\n"
                     out += doop
             }
-            $("#test").html("")
             $("#test").html(csv_to_table(out.trim()))
             //setTimeout(function(){getDir()},5000)
             getget = false; //flagdown
@@ -154,18 +153,6 @@
 		for (q in qq) 		out += qq[q].name+":"+qq[q].size+";<br>"
 		$("#queue_upload").html(out)
 	}
-	//
-	// $("#drop-area-div").dmUploader(
-	// 	{
-	// 		url:'/upload/',
-	// 		extraData:{path:window.location.pathname},
-	// 		dataType: 'json',
-	// 		onNewFile: function(id, file){qq[id]=file},
-	// 		onBeforeUpload: function(id){going = qq[id];delete(qq[id]); queueStatus()},
-	//         onUploadSuccess: function(id,data){getDir();uploadStatus("")},
-	// 		onUploadProgress: function(id, percent){uploadStatus(going.name+": "+percent+"%")}
-	// 	}
-	// );
 
 
 	//thanks stack! https://stackoverflow.com/a/33516020/565514
@@ -174,7 +161,7 @@
 		{ url: "/upload/",
 		  addRemoveLinks: false,
 
-	    	  params:{path:window.location.pathname},
+	      params:{path:window.location.pathname},
 		  init: function()
 			{
 			    this.on("success", function(file) {
@@ -189,11 +176,11 @@
 					bs = Math.round(bs*100)/100
 					uploadStatus(bs+'%');
 					console.log(bs);
-                                        $(".dz-success-mark").hide()
-                                        $(".dz-error-mark").hide()
+                    $(".dz-success-mark").hide()
+                    $(".dz-error-mark").hide()
 					
 				});
-			     this.on("addedfile",function(f){console.log(f)});
+			    this.on("addedfile",function(f){console.log(f)});
 			
 			}
 		}

@@ -57,7 +57,8 @@ var auth = function (req, res, next) {
 	  else {return unauthorized(res);};
 	}
 	else {
-		console.log('skip auth')
+		//console.log('skip auth')
+
 		next()
 		};
 };
@@ -147,5 +148,5 @@ var port = 8000;
 if (argv['p'] != undefined) port = argv['p']
 
 app.listen(port, function () {
-  console.log('Example app listening on port '+port+'!')
+  console.log('we be listening on port '+port+'!')
 })
