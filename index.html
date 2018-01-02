@@ -20,7 +20,14 @@
 
 	.main{width:750px;}
 
-	.ds-success{visibility:hidden;}
+	.ds-succes
+	s{visibility:hidden;}
+	
+	.dropbox{ 
+		border: 1px solid #555;
+		padding: 10px;
+		background-color: silver;
+	}
 
 	</style>
 
@@ -30,11 +37,8 @@
 	<h2 id="sub"></h2>
 	<hr>
 <div class="right">
-	<div id="drop-area-div" >
-  	  Click or Drag / Drop Files Here To Upload
-			<!--<label>-->
-			<!--	<input type="file" name="files[]" multiple="multiple" title='Click to add Files'>-->
-			<!--</label>-->
+	<div id="drop-area-div" class='dropbox'>
+   Click or Drag / Drop Files Here To Upload
 	</div>
 
 	<div id="cur_upload"></div>
@@ -160,10 +164,13 @@
 	var dd = $("#drop-area-div").dropzone(
 		{ url: "/upload/",
 		  addRemoveLinks: false,
-
+	
 	      params:{path:window.location.pathname},
 		  init: function()
 			{
+				$(".dz-success-mark").hide()
+				$(".dz-error-mark").hide()
+
 			    this.on("success", function(file) {
 					getDir();
 					$(".dz-success-mark").hide()
@@ -180,7 +187,12 @@
                     $(".dz-error-mark").hide()
 					
 				});
-			    this.on("addedfile",function(f){console.log(f)});
+			    this.on("addedfile",function(f){
+			    						$(".dz-success-mark").hide()
+					$(".dz-error-mark").hide()
+console.log(f)
+			    	
+			    });
 			
 			}
 		}
