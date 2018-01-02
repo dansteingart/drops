@@ -20,19 +20,36 @@
 
 	.main{width:750px;}
 
-	.ds-succes
-	s{visibility:hidden;}
+	.ds-success{visibility:hidden;}
 	
 	.dropbox{ 
 		border: 1px solid #555;
 		padding: 10px;
-		background-color: silver;
+		background-color: #bbb;
+	}
+
+	.dropbox:hover
+	{
+		background-color: #ccc;
+	}
+	
+	.gothere{
+		outline:none;
+		text-decoration: underline black;
+		color: silver;
+		
+	
 	}
 
 	</style>
 
 </head>
 <body>
+<div id="entrance">
+	<h1>choose your own adventure</h1>
+	<h1 id='genlink'></h1>
+</div>
+<div id='wrapped'>
 	<h1 id="title">Wait For The Drop</h1>
 	<h2 id="sub"></h2>
 	<hr>
@@ -49,9 +66,31 @@
 <div class="main">
 	<div id="test"> </div>
 </div>
+
+</div>
 <script>
 
+	
+
 	foop = window.location.pathname.split("/").slice(1,-1)
+	console.log(foop)
+	if (foop.length == 0) 
+	{	
+		console.log("let's call this home")
+		$("#wrapped").hide()
+		$("#genlink").html(window.location.href+"<span id='gothere' class='gothere' contenteditable='true'>test</span>  | <a id='whoosh'>make it so</a>" )
+		$("#gothere").focus()
+		$("#whoosh").click(function()
+		{
+			window.location = window.location.href + $('#gothere').text();
+		});
+		
+	}
+	else
+	{
+		 $("#entrance").hide()
+	}
+
 	lanks = ""
 	out = "/"
 	for (f in foop)
