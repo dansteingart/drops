@@ -40,10 +40,10 @@
 		
 	
 	}
-
 	</style>
 
 </head>
+
 <body>
 <div id="entrance">
 	<h1>choose your own adventure</h1>
@@ -69,21 +69,25 @@
 
 </div>
 <script>
-
-	
-
-	foop = window.location.pathname.split("/").slice(1,-1)
+	var foop = window.location.pathname.split("/").slice(1,-1)
 	console.log(foop)
 	if (foop.length == 0) 
 	{	
 		console.log("let's call this home")
 		$("#wrapped").hide()
-		$("#genlink").html(window.location.href+"<span id='gothere' class='gothere' contenteditable='true'>test</span>  | <a id='whoosh'>make it so</a>" )
+		$("#genlink").html(window.location.href+"<span id='gothere' class='gothere' contenteditable='true'>folder</span>    <a id='whoosh'>make it so</a>" )
 		$("#gothere").focus()
 		$("#whoosh").click(function()
 		{
 			window.location = window.location.href + $('#gothere').text();
 		});
+		
+		$("#gothere").keypress(function(e)
+		{
+			if (e.keyCode == 13) window.location = window.location.href + $('#gothere').text();
+			return e.which != 13
+		});
+
 		
 	}
 	else
@@ -143,7 +147,6 @@
 		str = str.replace("/filez/","/")
 		return "<a href='"+str+"'>"+nice+"</a>"
 	}
-
 
 	inspector = null
     
@@ -237,11 +240,7 @@ console.log(f)
 		}
 	)
 	
-
 </script>
 
 </body>
-
-
-
 </html>
