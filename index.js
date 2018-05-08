@@ -102,12 +102,16 @@ app.post("/upload/",auth,function (req,res){
 	form.parse(req, function(err, fields, files) {
 		for (f in files)
 		{
+			clobber = fields['clobber']
+			if (clobber = 'true') clobber = True;
+			else clobber = False
+			
 			tmp  = files[f][0]['path']
 			console.log(tmp)
 			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
 			console.log(goto)
 			goto = unescape(goto)
-			mv(tmp,goto,{mkdirp: true,clobber:false},function(err){
+			mv(tmp,goto,{mkdirp: true,clobber:clobber},function(err){
 				//at some point this shoujld throw the error
 				if (err == null)status = "ok"
 				else status = err
