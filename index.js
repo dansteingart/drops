@@ -103,7 +103,7 @@ app.post("/upload/",auth,function (req,res){
 		for (f in files)
 		{
 			clobber = fields['clobber']
-			if (clobber == true) clobber = true;
+			if (clobber != undefined) clobber = true;
 			else clobber = false
 			
 			tmp  = files[f][0]['path']
