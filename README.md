@@ -16,9 +16,9 @@ To run the docker image type
   -dit --name drops steingart/drops
 ```
 
-where `8200` is the port which is available on your host, and `/path/to/files` is where you want to store the dropped files on your host, and `drops` is what I named the container. These can all change. Everything else should be the same
+where `8200` is the port which is available on your host, and `/path/to/files` is where you want to store the dropped files on your host, and `drops` is what I named the container. These can all change. Everything else should be the same.
 
-The docker literate amoung you will note that the `-p` is no good. Agreed better to use a [reverse proxy](https://hub.docker.com/r/steingart/redbird) and point it to the container, so you might start the docker container like this:
+The docker literate amoung you will note that the `-p` is no good. Agreed. Better to use a [reverse proxy](https://hub.docker.com/r/steingart/redbird) and point it to the container, so you might start the docker container like this:
 
   ```
   docker run --network YOURNET --ip 10.0.0.200 \
