@@ -56,5 +56,5 @@ export GEN_PASS=passwordmakeitevenmoredifficult
 
 Don't like it?  You've got the code [here](https://github.com/dansteingart/drops) cowperson, change it!
 
-#Run Without Docker
+# Run Without Docker
 See above. If you really must run uncontainerized for whatever reason, the program will try to write to `/filez/` as a base directory. If `/filez/` is not to your liking, go to line 27.
