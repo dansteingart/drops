@@ -33,14 +33,19 @@ var gen_user = randomstring.generate();
 var gen_pass = randomstring.generate();
 
 if (process.env.GEN_USER != undefined) gen_user = process.env.GEN_USER
-else if (argv['user'] != undefined)    gen_user = argv['pass'] ;
+else if (argv['user'] != undefined)    gen_user = argv['user'] ;
 
 if (process.env.GEN_PASS != undefined) gen_pass = process.env.GEN_PASS
-else if (argv['pass'] != undefined)    gen_user = argv['pass'] ;
+else if (argv['pass'] != undefined)    gen_pass = argv['pass'] ;
 
+if (process.env.GEN_FILE != undefined) gen_file = process.env.GEN_FILE
+else if (argv['file'] != undefined)    gen_file = argv['file'] ;
+else gen_file = '/filez/'
 
-console.log("user: " + gen_user);
-console.log("pass: " + gen_pass);
+console.log("user: "     + gen_user);
+console.log("pass: "     + gen_pass);
+console.log("file dir: " + gen_file);
+
 
 var auth = function (req, res, next) {
 	if (argv['auth'] != 'false')
@@ -70,7 +75,7 @@ app.use(bodyParser.json())
 //List All Files
 app.post('/list/',auth,function (req, res) {
 	terms = req.body
-	glob("/filez/"+unescape(terms['search'])+"/*", function (er, files)
+	glob(gen_file+unescape(terms['search'])+"/*", function (er, files)
 	{
 		bigout = [];
 		for (f in files)
@@ -78,7 +83,7 @@ app.post('/list/',auth,function (req, res) {
 			try{
 				end = bigout.length
 				bigout[end] = fs.statSync(files[f])
-				bigout[end]['name'] = files[f].replace("/filez/","/")
+				bigout[end]['name'] = files[f].replace(gen_file,"/")
 				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
 			}
 			catch(e){}
@@ -92,23 +97,28 @@ app.post('/list/',auth,function (req, res) {
 //Post Function To get File
 app.post("/filez/",auth,function (req,res){
 	terms = req.body
-	file = "/filez/"+terms['file']
+	file = gen_file+terms['file']
 	res.sendFile(file)
 })
 
 // post function to upload
 app.post("/upload/",auth,function (req,res){
 	var form = new multiparty.Form();
+	console.log("here")
 	form.parse(req, function(err, fields, files) {
+		console.log("and here")
+		console.log(fields);
+		console.log(files);
 		for (f in files)
 		{
+			console.log("and finally...")
 			clobber = fields['clobber']
 			if (clobber != undefined) clobber = true;
 			else clobber = false
 			
 			tmp  = files[f][0]['path']
 			console.log(tmp)
-			goto = "/filez"+fields['path'][0]+files[f][0]['originalFilename']
+			goto = gen_file+fields['path'][0]+files[f][0]['originalFilename']
 			console.log(goto)
 			goto = unescape(goto)
 			mv(tmp,goto,{mkdirp: true,clobber:clobber},function(err){
@@ -129,7 +139,7 @@ app.post("/zip",auth,function(req,res){ })
 app.get("/*", function(req,res){
 	//get request
 	path = req.originalUrl
-	file = "/filez"+unescape(path)
+	file = gen_file+unescape(path)
 
 	//To start, assume we're going to serve an index
 	var ind = __dirname+"/index.html"
