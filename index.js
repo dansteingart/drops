@@ -42,6 +42,9 @@ if (process.env.GEN_FILE != undefined) gen_file = process.env.GEN_FILE
 else if (argv['file'] != undefined)    gen_file = argv['file'] ;
 else gen_file = '/filez/'
 
+var port = 8000;
+if (argv['p'] != undefined) port = argv['p']
+
 console.log("user: "     + gen_user);
 console.log("pass: "     + gen_pass);
 console.log("file dir: " + gen_file);
@@ -157,9 +160,6 @@ app.get("/*", function(req,res){
 	else res.sendFile(tts,function(err){if (err) res.status(404).end("these are not the drops you're looking for")})
 })
 
-//Listen on Port 8000
-var port = 8000;
-if (argv['p'] != undefined) port = argv['p']
 
 app.listen(port, function () {
   console.log('we be listening on port '+port+'!')
