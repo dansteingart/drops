@@ -78,7 +78,7 @@ app.use(bodyParser.json())
 //List All Files
 app.post('/list/',auth,function (req, res) {
 	terms = req.body
-	files = glob(gen_file+unescape(terms['search'])+"/*"));
+	files = glob(gen_file+unescape(terms['search'])+"/*");
 	bigout = [];
 	for (f in files)
 	{
