@@ -8,7 +8,7 @@
 //	- Uploads
 //	- Basic CSS
 //	- Make New Dir
-// - authetication
+// - authentication
 
 //To Do:
 // - auto zip
@@ -17,7 +17,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
-var glob = require("glob")
+var {glob} = require("glob")
 var fs = require('fs');
 var multiparty = require('multiparty');
 var mv = require('mv')
@@ -78,23 +78,22 @@ app.use(bodyParser.json())
 //List All Files
 app.post('/list/',auth,function (req, res) {
 	terms = req.body
-	glob(gen_file+unescape(terms['search'])+"/*", function (er, files)
+	files = glob(gen_file+unescape(terms['search'])+"/*"));
+	bigout = [];
+	for (f in files)
 	{
-		bigout = [];
-		for (f in files)
-		{
-			try{
-				end = bigout.length
-				bigout[end] = fs.statSync(files[f])
-				bigout[end]['name'] = files[f].replace(gen_file,"/")
-				bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
+		try{
+			end = bigout.length
+			bigout[end] = fs.statSync(files[f])
+			bigout[end]['name'] = files[f].replace(gen_file,"/")
+			bigout[end]['is_dir'] = fs.lstatSync(files[f]).isDirectory()
 			}
 			catch(e){}
-		}
+	}
 
-		if (terms['search'] == "") bigout = {}
-		res.send(bigout)
-	})
+	if (terms['search'] == "") bigout = {}
+	res.send(bigout)
+	
 })
 
 //Post Function To get File
